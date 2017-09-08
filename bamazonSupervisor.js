@@ -79,6 +79,27 @@ function prodSalesFunc() {
 }
 
 function createDeptFunc() {
-    console.log("We'll let the Supervisor create new departments");
+    inquirer.prompt([
+        {
+            name: "departmentName",
+            type: "input",
+            message: "What is the department name?"
+        },
+        {
+            name: "overHC",
+            type: "input",
+            message: "What are the over head costs associated with this department?"
+        }
+    ]).then(function(answer){
+        connection.query("INSERT INTO departments SET ?",
+    {
+        department_name: answer.departmentName,
+        over_head_costs: answer.overHC
+    },
+    function(err){
+        if (err) throw err;
+    })
+    console.log("Your department has been added.");
+    })
 }
 
